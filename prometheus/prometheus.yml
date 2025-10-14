@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 2s
+
+rule_files:
+  - "/etc/prometheus/alert.rules.yml"
+
+scrape_configs:
+  - job_name: 'mock_server'
+    static_configs:
+      - targets: ['mock_server:9100']

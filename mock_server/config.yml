@@ -1,0 +1,37 @@
+update_interval_seconds: 2
+num_label_combinations: 10 # pick random N combinations per update
+
+chaos:
+  enable_spikes: true
+  spike_chance: 0.1
+  spike_multiplier: 5
+  enable_dropouts: true
+  dropout_chance: 0.05
+  enable_missing_metrics: true
+  missing_metric_chance: 0.05
+  enable_latency_trend: true
+  latency_drift_per_tick: 0.05
+  enable_status_flips: true
+  status_flip_chance: 0.07
+
+metrics:
+  http_server_requests_seconds:
+    type: histogram
+    description: "HTTP request duration per second"
+    buckets: [0.05, 0.1, 0.5, 1, 3, 10, 30, 60, 600]
+    base_value: 0.3
+    variance: 0.3
+    drift_direction: "up"
+
+  http_server_requests_seconds_max:
+    type: gauge
+    description: "Max observed latency"
+    base_value: 2
+    variance: 0.5
+
+labels:
+  app: ["backend"]
+  env: ["prod"]
+  method: ["GET"]
+  status: ["200", "500"]
+  uri: ["/api/orders", "/api/payments", "/api/users", "/api/products"]

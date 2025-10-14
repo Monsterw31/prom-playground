@@ -1,0 +1,64 @@
+pattern_generator:
+  enabled: true
+  phases:
+    # Phase 1: Normal 200 status for 1 minute
+    - name: "normal_requests_1"
+      start_seconds: 0
+      duration_seconds: 60
+      generate: true
+      status: "200"
+      latency: 0.15
+      max_latency: 0.3
+      interval_seconds: 0.5 # Generate every 0.5 seconds
+
+    # Phase 2: Missing data for 2 minute
+    - name: "missing_data_1"
+      start_seconds: 60
+      duration_seconds: 120
+      generate: false # No metrics generated
+
+    # Phase 3: Single 500 error (brief spike)
+    - name: "error_spike_1"
+      start_seconds: 180
+      duration_seconds: 1 # Just 1 request
+      generate: true
+      status: "500"
+      latency: 2.0
+      max_latency: 5.0
+      interval_seconds: 1.0
+
+    # Phase 4: Missing data for 5 minute
+    - name: "missing_data_2"
+      start_seconds: 181
+      duration_seconds: 300
+      generate: false # No metrics generated
+
+    # Phase 5: Normal 200 status for 1 minute
+    - name: "normal_requests_2"
+      start_seconds: 481
+      duration_seconds: 60
+      generate: true
+      status: "200"
+      latency: 0.15
+      max_latency: 0.3
+      interval_seconds: 0.5 # Generate every 0.5 seconds
+
+    # Phase 6: Single 500 error (brief spike)
+    - name: "error_spike_2"
+      start_seconds: 541
+      duration_seconds: 1 # Just 1 request
+      generate: true
+      status: "500"
+      latency: 2.0
+      max_latency: 5.0
+      interval_seconds: 1.0
+
+    # Phase 7: Back to normal 200 status
+    - name: "recovery"
+      start_seconds: 542
+      duration_seconds: 120
+      generate: true
+      status: "200"
+      latency: 0.12
+      max_latency: 0.25
+      interval_seconds: 0.5
